@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF‐8">
+    <script th:src="@{/js/jquery.js}"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/layui/icon-extend/iconfont.css">
+    <title>题库</title>
+
+    <style>
+        #div-previous {
+            border: #2b542c 2px solid;
+            border-radius: 5px;
+            padding: 5px 15px 5px 5px;
+            text-align: center;
+            float: left;
+        }
+
+        #div-middle {
+            display: inline;
+            text-align: center;
+            color: dimgray;
+        }
+
+
+        #div-next {
+            border: #2b542c 2px solid;
+            border-radius: 5px;
+            padding: 5px 5px 5px 15px;
+            text-align: center;
+            float: right;
+            position: relative;
+        }
+
+        #div-title {
+            border-left: darkslategrey 2px solid;
+            height: 50px;
+            background-color: #FDFDFD;
+            font-weight: bold;
+            padding: 5px 0 0 10px;
+            margin-left: 10px;
+        }
+
+        #div-content {
+            margin-left: 10px;
+            margin-top: 10px;
+            padding: 10px;
+            height: 380px;
+            overflow: auto;
+        }
+
+        #p-tag {
+            color: dimgray;
+            font-size: 10px;
+            margin-top: 5px;
+            font-weight: lighter;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-tab layui-tab-card" lay-filter="tabFilter">
+    <ul class="layui-tab-title">
+        <li class="layui-this">浏览</li>
+        <li>背题</li>
+    </ul>
+    <div class="layui-tab-content" style="background-color: white;">
+        <div id="div-browse" class="layui-tab-item layui-show">
+            <table id="myCollection" class="layui-table"></table>
+        </div>
+
+        <div id="div-remember" class="layui-tab-item layui-fluid">
+            <div style="height: 50px;text-align: center">
+                <div id="div-previous">
+                    <i class="icon-extend icon-extend-direction-left" style="color: black"> </i>
+                    <p id="p-previous" style="display: inline"><a style="cursor: pointer">上一题</a></p>
+                </div>
+
+                <div id="div-middle" >
+                    第 <p id="p-current" style="display:inline;"></p> 题 / 共 <p id="p-count" style="display: inline"></p>
+                    题 <i id="i-help" class="icon-extend icon-extend-help" style="color: #2b542c"></i>
+                </div>
+
+                <div id="div-next">
+                    <p id="p-next" style="display: inline"><a style="cursor: pointer">下一题</a></p>
+                    <i class="icon-extend icon-extend-direction-right" style="color: black"> </i>
+                </div>
+            </div>
+            <div>
+                <div id="div-title" unselectable="on" style="-moz-user-select:none;" onselectstart="return false;">
+                    <p id="p-title" style="font-size: 18px"></p>
+                    <p id="p-tag">
+                        <i class="icon-extend icon-extend-discount"> </i>硕士 | 理学 | 计算机科学与技术 | 计算机科学与技术
+                    </p>
+                </div>
+                <div id="div-content"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:src="@{/layui/layui.js}"></script>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="delete">删除</button>
+    </div>
+</script>
+<script type="text/html" id="bar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</button>
+    </div>
+</script>
+<script>
+    layui.use(['layer', 'table'], function () {
+        let table = layui.table
+            , layer = layui.layer
+            , username = parent.parent.parentToChildValue('hidden-username')
+
+        //表格渲染
+        table.render({
+            elem: '#myCollection'
+            , skin: 'nob'
+            , even: true
+            , toolbar: "#toolbar"
+            , height: 500
+            , page: false
+            , url: '/get/enshrine/' + username //数据接口
+            , cols: [
+                [ //表头
+                    {type: 'checkbox', fixed: 'left'}
+                    , {field: 'title', title: '标题', style: "font-weight: bold"}
+                    , {fixed: 'right', width: 150, align: 'center', toolbar: '#bar'}
+                ]
+            ]
+        });
+
+        //头工具栏事件
+        table.on('toolbar(myCollectionFilter)', function (obj) {
+            let checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'delete':
+                    console.log(checkStatus.data) //获取选中行的数据
+                    console.log(checkStatus.data.length) //获取选中行数量，可作为是否有选中行的条件
+                    console.log(checkStatus.isAll) //表格是否全选
+            }
+        });
+
+        //行事件
+        table.on('tool(myCollectionFilter)', function (obj) {
+            let data = obj.data //获得当前行数据
+                , layEvent = obj.event; //获得 lay-event 对应的值
+            if (layEvent === 'detail') {
+                alert(data.title)
+            }
+        })
+
+
+        $.get('/get/enshrine/' + username, function (data) {
+            let enshrines = data.data;
+            let index = 0;
+            $('#p-current').text(index + 1)
+            $('#p-count').text(enshrines.length)
+            $('#p-title').text(enshrines[index].title)
+            $('#div-content').html(enshrines[index].content)
+
+            $('#p-previous').click(function () {
+                if (index === 0) {
+                    layer.msg('已是第一题', {
+                        time: 1000
+                    })
+                } else {
+                    index -= 1;
+                    $('#p-current').text(index + 1)
+                    $('#p-count').text(enshrines.length)
+                    $('#p-title').text(enshrines[index].title)
+                    $('#div-content').html(enshrines[index].content)
+                }
+            })
+
+            $('#p-next').click(function () {
+                if (index === enshrines.length - 1) {
+                    layer.msg('已是最后一题', {
+                        time: 1000
+                    })
+                } else {
+                    index += 1;
+                    $('#p-current').text(index + 1)
+                    $('#p-count').text(enshrines.length)
+                    $('#p-title').text(enshrines[index].title)
+                    $('#div-content').html(enshrines[index].content)
+                }
+
+            })
+        }, 'json')
+
+
+        $('#div-title').dblclick(function () {
+            $('#div-content').slideToggle();
+        })
+
+        $("#i-help").hover(function () {
+            openMsg();
+        }, function () {
+            layer.close(subtips);
+        });
+
+        function openMsg() {
+            subtips = layer.tips('双击标题隐藏 / 显示答案', '#i-help', {
+                tips: [2, '#2b542c'],
+                time: 3000
+            });
+        }
+    });
+</script>
+</html>

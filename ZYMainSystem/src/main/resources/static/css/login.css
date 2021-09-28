@@ -1,0 +1,27 @@
+body {
+    background-image: url("../img/img_login_background.png");
+}
+
+/*登录板块*/
+#div-login {
+    height: 400px;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+/*input输入框样式*/
+.diy-input {
+    display: flex;
+    border: 1px solid #D2D2D2 !important;
+    background-color: #fff;
+    height: 40px;
+    line-height: 38px;
+    padding-left: 15px;
+    border-radius: 3px;
+}
+
+/*取消layui的input样式*/
+.layui-input {
+    border: none;
+}

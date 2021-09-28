@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF‐8">
+    <title>登录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!--css-->
+    <link href="/img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/layui/icon-extend/iconfont.css">
+    <link rel="stylesheet" href="/css/login.css">
+
+    <!--style-->
+    <style>
+        .layui-input {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-container">
+    <!--header-->
+    <div class="layui-row" style="height:100px"></div>
+
+    <!--logo-->
+    <div class="layui-row">
+        <div style="text-align: center;font-size: 30px;color:white;font-family: 华文彩云,serif">
+            橙 光
+        </div>
+        <div style="text-align: center;font-size: 15px;color:white;padding: 10px">
+            书写 ● 创意 ● 优雅 ● 艺术
+        </div>
+    </div>
+
+
+    <!--form-->
+    <div class="layui-row">
+        <div class="layui-col-md4 layui-col-md-offset4" id="div-login" style="padding: 15px">
+            <!--welcome-->
+            <div style="text-align: center;font-size: 30px;color:chocolate;font-family: 华文彩云,serif;margin-top: 10px">
+                Welcome!
+            </div>
+            <!--表单-->
+            <form class="layui-form" method="post"
+                  style="margin-top: 30px;margin-left: 20px;margin-right: 20px;text-align: center">
+                <!--1. 账号-->
+                <div class="layui-form-item">
+                    <div class="diy-input">
+                        <i class="layui-icon layui-icon-username"></i>
+                        <label for="input-username"></label>
+                        <input type="text" name="username" class="layui-input layui-col-md8" id="input-username"
+                               placeholder="请输出账号">
+                    </div>
+                </div>
+
+                <!--2. 密码-->
+                <div class="layui-form-item">
+                    <div class="diy-input">
+                        <i class="layui-icon layui-icon-password"></i>
+                        <label for="input-password"></label>
+                        <input type="password" name="password" class="layui-input layui-col-md8" id="input-password"
+                               placeholder="请输出密码">
+                        <i id="i-hide-password" class="icon-extend icon-extend-eye-close"
+                           style="margin-right: 10px"></i>
+                    </div>
+                </div>
+
+                <!--3. 记住我 忘记密码-->
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label for="checkbox-remember"> </label>
+                        <input id="checkbox-remember" name="remember" type="checkbox" title="自动登录" checked
+                               lay-skin="primary">
+                    </div>
+                    <div class="layui-inline" style="margin-top: 7px;margin-left: 100px">
+                        <a href="https://www.baidu.com">忘记密码？</a>
+                    </div>
+                </div>
+
+                <!--4. 登录按钮-->
+                <div class="layui-form-item">
+                    <button type="button" class="layui-btn layui-btn-radius layui-btn-primary" id="btn-submit"
+                            style="background-color: #CB1E18;width: 300px;height:36px;margin-top: 15px;color: white;border: none">
+                        登 录
+                    </button>
+                </div>
+
+                <!--5. 分割线-->
+                <hr class="layui-border-orange" style="margin:30px">
+
+                <!--6. 注册-->
+                <div class="layui-form-item">
+                    还没有账号？<a id="a-register">点击注册</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/login.js}"></script>
+<script src="/js/jquery.js"></script>
+<script type="text/javascript">
+
+    //防止页面后退
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
+
+</script>
+</body>
+</html>

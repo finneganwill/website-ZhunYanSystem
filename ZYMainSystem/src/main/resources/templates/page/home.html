@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF‐8">
+    <title>首页 - 准研网</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!--1. css-->
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2658836_bnj1up1rgei.css">
+    <!--2. js-->
+    <script src="/js/jquery.js"></script>
+    <script src="/js/title.js"></script>
+    <script src="/js/home.js"></script>
+
+</head>
+<body style="background-color: whitesmoke">
+<div class="layui-col-space20">
+    <!--1. left-->
+    <div class="layui-col-md8">
+        <!--轮播图-->
+        <div class="layui-carousel" id="div-carousel">
+            <div carousel-item>
+                <img src="/img/slideshow1.png" alt="">
+                <img src="/img/slideshow2.png" alt="">
+                <img src="/img/slideshow3.png" alt="">
+                <img src="/img/slideshow4.png" alt="">
+            </div>
+        </div>
+
+        <!--推荐-->
+        <div id="div-content" style="margin-top: 20px">
+        </div>
+
+        <!--更多-->
+        <div style="text-align: center">
+            <button id="btn-more" style="border: none;background-color: #b2dba1">
+                加载更多
+            </button>
+        </div>
+    </div>
+
+    <!--2. right-->
+    <div class="layui-col-md4">
+        <!--日程-->
+        <div class="layui-card">
+            <div class="layui-card-header" style="font-weight: bold">日程</div>
+            <div class="layui-card-body">
+                <ul class="layui-timeline">
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">初试：12月</h3>
+                            <p><a href="https://yz.chsi.com.cn/yzzt/kybk" target="_blank">考研百科</a></p>
+                            <p>12月26日上午 思想政治理论、管理类联考综合能力</p>
+                            <p>12月26日下午 外国语</p>
+                            <p>12月27日上午 业务课一</p>
+                            <p>12月27日上午 业务课一</p>
+                            <p>12月28日 考试时间超过3小时或有使用画板等特殊要求的考试科目</p>
+                            <p>每科考试时间一般为3小时；建筑设计等特殊科目考试时间最长不超过6小时。</p>
+                            <p>详细考试时间、考试科目及有关要求等请见《准考证》及考点和招生单位公告。</p>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">报名：9月-10月</h3>
+                            <p><a href="https://yz.chsi.com.cn/yzwb/" target="_blank">网报入口</a></p>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">录取信息公开：7月</h3>
+                            <p>参加当年全国硕士研究生招生考试统考的考生可在规定时限内查看相关录取公开信息。</p>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">拟录取：4月-5月</h3>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">复试 & 调剂：3月-4月</h3>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <div class="layui-timeline-title">更早</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    //轮播图
+    layui.use('carousel', function () {
+        let carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#div-carousel'
+            , width: '100%' //设置容器宽度
+            , height: '350px'
+            , arrow: 'always' //始终显示箭头
+        });
+    });
+</script>
+</body>
+</html>

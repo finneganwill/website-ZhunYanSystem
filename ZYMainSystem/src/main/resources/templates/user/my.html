@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF‐8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!--1. css-->
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/layui/icon-extend/iconfont.css">
+    <!--2. js-->
+    <script src="/js/jquery.js"></script>
+    <script src="/js/title.js"></script>
+    <script src="/js/frame.js"></script>
+    <title>个人信息 - 明月清风</title>
+
+    <style>
+        i {
+            color: darkslategray;
+        }
+
+        li {
+            font-size: 15px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        a:link {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #999999;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body style="background-color: whitesmoke">
+<div class="layui-col-space10">
+    <!--目录-->
+    <div class="layui-col-md2">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div style="font-weight: bold">个人</div>
+                <ul>
+                    <li style="background-color: aliceblue">
+                        <i class="icon-extend icon-extend-gerenzhongxin">&nbsp;</i>
+                        <a id="a-info" target="info-iframe">基本资料</a>
+                    </li>
+                    <li>
+                        <i class="icon-extend icon-extend-mima">&nbsp;</i>
+                        <a id="a-psw" href="/user/info/psw" target="info-iframe">重置密码</a>
+                    </li>
+                    <li>
+                        <i class="icon-extend icon-extend-tuichu">&nbsp;</i>
+                        <a href="/user/info/destroy" target="info-iframe">注销账号</a>
+                    </li>
+                </ul>
+                <div style="font-weight: bold">动态</div>
+                <ul>
+                    <li>
+                        <i class="icon-extend icon-extend-xinjian">&nbsp;</i>
+                        <a href="/user/action/new" target="info-iframe">新建</a>
+                    </li>
+                    <li>
+                        <i class="icon-extend icon-extend-xiaoxi">&nbsp;</i>
+                        <a href="/user/action/discuss" target="info-iframe">讨论</a>
+                    </li>
+                    <li>
+                        <i class="icon-extend icon-extend-lujing103">&nbsp;</i>
+                        <a href="/user/action/collect" target="info-iframe">题库</a>
+                    </li>
+                    <li>
+                        <i class="icon-extend icon-extend-pinglun">&nbsp;</i>
+                        <a href="/user/action/comment" target="info-iframe">评论</a>
+                    </li>
+
+                </ul>
+                <div style="font-weight: bold">其他</div>
+                <ul>
+                    <li>
+                        <i class="icon-extend icon-extend-shezhi">&nbsp;</i>
+                        <a href="/page/home" target="info-iframe">其他设置</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-col-md10">
+        <iframe id="iframe-info" name="info-iframe" style="width: 100%;background-color: whitesmoke;margin-bottom: 20px"
+                frameborder=0 scrolling="no" onload="setIframeHeight('iframe-info')">
+        </iframe>
+    </div>
+</div>
+<script type="text/javascript">
+    function parentToChildValue(selector) {
+        return window.parent.parentToChildValue(selector);
+    }
+
+    $(function () {
+        let username = window.parent.parentToChildValue('hidden-username');
+
+        $('#a-info').attr('href', '/user/info/info/' + username)
+        $('#iframe-info').attr('src', '/user/info/info/' + username)
+
+        $('li').click(function () {
+            $('li').css('background-color', 'white')
+            $(this).css('background-color', 'aliceblue')
+            $($(this).children('a'), this)[0].click();
+        })
+
+    })
+</script>
+</body>
+</html>

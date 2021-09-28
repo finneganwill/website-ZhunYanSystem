@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF‐8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>注册</title>
+    <!--css-->
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/layui/icon-extend/iconfont.css">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+    <!--js-->
+    <script th:src="@{/js/jquery.js}"></script>
+
+    <style>
+        .layui-input {
+            width: 350px;
+        }
+
+        #input-vercode {
+            width: 120px;
+        }
+
+        form {
+            width: 480px;
+            margin: auto;
+        }
+
+        #input-official-license > input {
+            width: 60px;
+        }
+
+        /*分散对齐*/
+        label {
+            text-align: justify;
+            text-justify: distribute-all-lines;
+            text-align-last: justify;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title" style="text-align: center">
+        <li class="layui-this">普通用户注册</li>
+        <li>院校官方注册</li>
+    </ul>
+    <div class="layui-tab-content">
+        <!--普通用户注册-->
+        <div class="layui-tab-item layui-show" style="margin-top: 30px">
+            <form class="layui-form" style="width: 480px;margin: auto">
+                <!--用户名-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="input-username">用户名</label>
+                    <div class="layui-input-block">
+                        <div class="layui-inline">
+                            <input id="input-username" type="text" name="username" placeholder="请输入手机号或邮箱"
+                                   autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!--密码-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="input-password">密码</label>
+                    <div class="layui-input-block">
+                        <div class="layui-inline">
+                            <input id="input-password" type="password" name="password"
+                                   placeholder="请输入6-12位密码，可包含数字和大小写字母"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!--确认密码-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="input-confirm">确认密码</label>
+                    <div class="layui-input-block">
+                        <div class="layui-inline">
+                            <input id="input-confirm" type="password" name="confirm" placeholder="请确认密码"
+                                   autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!--验证码-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="input-vercode">验证码</label>
+                    <div class="layui-input-block">
+                        <div class="layui-inline">
+                            <input id="input-vercode" type="text" name="vercode" placeholder="请输入验证码" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-inline">
+                            <canvas id="canvas-vercode" width="120" height="40"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!--提交按钮-->
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button id="btn-submit" type="button" class="layui-btn layui-btn-radius" style="width: 240px;">
+                            注册
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <!--院校官方注册-->
+        <div class="layui-tab-item" style="margin-top: 30px">
+            <form class="layui-form" lay-filter="test">
+                <!--院校名称-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="select-official-name">院校名称</label>
+                    <div class="layui-input-block">
+                        <div class="layui-inline">
+                            <select id="select-official-name" name="name" lay-search>
+                                <option value="">请选择院校</option>
+                            </select>
+                        </div>
+                        <br>
+                        <tip style="display: inline-block;font-size: 10px;color: #a29c9c;">
+                            * 注册完成后，院校代码即为登录账号
+                        </tip>
+                    </div>
+                </div>
+
+                <!--授权码-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="input-official-license">官方授权码</label>
+                    <div class="layui-input-block">
+                        <div class="layui-inline" id="input-official-license">
+                            <input id="license-1" type="text" autocomplete="off" class="layui-input layui-input-inline"
+                                   maxlength="4">
+                            <div class="layui-form-mid">-</div>
+                            <input id="license-2" type="text" autocomplete="off" class="layui-input layui-input-inline"
+                                   maxlength="4">
+                            <div class="layui-form-mid">-</div>
+                            <input id="license-3" type="text" autocomplete="off" class="layui-input layui-input-inline"
+                                   maxlength="4">
+                            <div class="layui-form-mid">-</div>
+                            <input id="license-4" type="text" autocomplete="off" class="layui-input layui-input-inline"
+                                   maxlength="4">
+                        </div>
+                        <br>
+                        <tip style="display: inline-block;font-size: 10px;color: #a29c9c;">
+                            * 请联系院校官方获取注册授权码
+                        </tip>
+                    </div>
+                </div>
+
+                <!--密码-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="input-official-password">密码</label>
+                    <div class="layui-input-block">
+                        <div class="layui-inline">
+                            <input id="input-official-password" type="password" name="password"
+                                   placeholder="请输入6-18位密码，可包含数字和大小写字母"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!--确认密码-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="input-official-confirm">确认密码</label>
+                    <div class="layui-input-block">
+                        <div class="layui-inline">
+                            <input id="input-official-confirm" type="password" name="confirm" placeholder="请确认密码"
+                                   autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!--提交按钮-->
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button id="btn-submit-2" type="button" class="layui-btn layui-btn-radius"
+                                style="width: 240px;">注册
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/register.js}"></script>
+<script>
+    layui.use(['jquery', 'layer', 'form'], function () {
+
+        const $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form,
+            regex_psw = /^([A-Z]|[a-z]|[0-9]){6,12}$/,
+            regex_phone = /^1[3456789]\d{9}$/,//手机号正则表达式
+            regex_mail = /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;//邮箱
+
+
+        /********************************* 用户注册 ***********************************/
+
+            //初始化验证码
+        let vercode = verifyCode('#canvas-vercode', 120, 40);
+
+        //点击换一张验证码
+        $("#canvas-vercode").click(function () {
+            vercode = verifyCode('#canvas-vercode', 120, 40);
+        })
+
+        //注册提交
+        $("#btn-submit").click(function () {
+            let username = $("#input-username").val(),
+                password = $("#input-password").val(),
+                confirm = $("#input-confirm").val(),
+                inputcode = $("#input-vercode").val();
+
+            if (username === '' || password === '' || confirm === '' || inputcode === '') {
+                layer.msg('请将注册信息填写完整', {
+                    time: 2000
+                })
+            } else if (!regex_phone.test(username) && !regex_mail.test(username)) {//用户名格式验证
+                layer.msg('用户名格式不正确', {
+                    time: 1000
+                })
+            } else if (!regex_psw.test(password)) {//密码格式验证
+                layer.msg('密码格式不正确', {
+                    time: 1000
+                })
+            } else if (password !== confirm) {//确认密码验证
+                layer.msg('两次密码输入不一致', {
+                    time: 1000
+                })
+            } else if (inputcode !== vercode) {//验证码验证
+                layer.msg('验证码不正确', {
+                    time: 1000
+                })
+                vercode = verifyCode('#canvas-vercode', 120, 40);
+            } else {
+                //2. 注册验证
+                $.post("/user/register/check", {
+                    username: username
+                }, function (data) {
+                    if (data.code === 400) {//已注册
+                        layer.msg('账号已注册', {
+                            icon: 2,
+                            time: 1000
+                        })
+                    } else if (data.code === 200) {//未注册
+                        $.post("/user/register", {
+                            username: username,
+                            password: password
+                        }, function (data) {
+                            if (data.code === 200) {
+                                layer.msg('注册成功，欢迎登录', {
+                                    icon: 1,
+                                    time: 1000
+                                }, function () {
+                                    const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                    parent.layer.close(index); //再执行关闭
+                                })
+                            } else {
+                                layer.msg('注册失败', {
+                                    icon: 2,
+                                    time: 1000
+                                })
+                            }
+                        }, "json")
+                    }
+                }, "json")
+            }
+        })
+
+
+        /********************************* 院校注册 ***********************************/
+        //信息初始化
+        $.get("/uni/all", function (data) {
+            $.each(data, function (i, value) {
+                $("#select-official-name").append('<option value="' + value.code + '">' + '(' + value.code + ') ' + value.name + '</option>');
+            })
+            form.render('select', 'test');
+        }, "json")
+
+        //注册
+        $("#btn-submit-2").click(function () {
+            let officialCode = $("#select-official-name option:selected").val(),
+                license1 = $("#license-1").val(),
+                license2 = $("#license-2").val(),
+                license3 = $("#license-3").val(),
+                license4 = $("#license-4").val(),
+                psw = $("#input-official-password").val(),
+                confirm = $("#input-official-confirm").val();
+
+            if (officialCode === '' || license1 === '' || license2 === '' || license3 === '' || license4 === '' || psw === '' || confirm === '') {
+                layer.msg('请将注册信息填写完整', {
+                    time: 2000
+                })
+            } else if (!regex_psw.test(psw)) {//密码格式校验
+                layer.msg('密码格式不正确', {
+                    time: 2000
+                })
+            } else if (psw !== confirm) {//确认密码校验
+                layer.msg('两次密码输入不一致', {
+                    time: 2000
+                })
+            } else {
+                $.post("/official/register/check", {
+                    code: officialCode,
+                    license: license1 + license2 + license3 + license4
+                }, function (data) {
+                    if (data.code === 200) {
+                        $.post("/official/register", {
+                            code: officialCode,
+                            password: psw,
+                        }, function (data) {
+                            if (data.code === 200) {
+                                layer.msg(data.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function () {
+                                    const index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                    parent.layer.close(index); //再执行关闭
+                                })
+                            } else {
+                                layer.msg(data.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                })
+                            }
+                        }, "json")
+                    } else if (data.code === 400) {
+                        layer.msg(data.msg, {
+                            time: 2000
+                        })
+                    }
+                }, "json")
+            }
+
+        })
+
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+spring:
+  # 模板引擎
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    encoding: utf-8
+    mode: HTML
+    suffix: .html
+    check-template-location: true
+#  web:
+#    resources:
+#      static-locations: classpath:static/
+  # 数据源
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/zysystem?useUnicode=true&characterEncoding=utf-8
+
+server:
+  port: 8080
+
+# 整合Mybatis
+mybatis:
+  type-aliases-package: com.example.zymainsystem.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF‐8">
+    <title>讨论</title>
+
+    <link rel="stylesheet" href="/layui/css/layui.css">
+
+    <style>
+        #submit {
+            height: 35px;
+            width: 100px;
+            margin-top: 20px;
+            border: none;
+            background-color: #37C8F7;
+            border-radius: 50px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-tab layui-tab-card" lay-filter="discussionTabFilter">
+    <ul class="layui-tab-title">
+        <li class="layui-this">发起讨论帖</li>
+        <li>我参与的</li>
+    </ul>
+    <div class="layui-tab-content" style="background-color: white;">
+        <div id="div-new" class="layui-tab-item layui-show">
+            <form class="layui-form" id="fromDiscuss" style="padding: 15px">
+
+                <div class="layui-form-item" id="div-title">
+                    <label for="input-title"></label>
+                    <input id="input-title" name="title" type="text" placeholder="请提问，最多30个字"
+                           style="margin: 15px;border: none;font-size: 20px">
+                    <div style="height: 2px;background-color: whitesmoke;margin-bottom: 5px"></div>
+                </div>
+
+                <div class="layui-form-item" id="div-content">
+                    <label for="input-content"></label>
+                    <textarea id="input-content" name="content" lay-verify="content" style="display: none;"></textarea>
+                </div>
+
+                <div class="layui-form-item">
+                    <input type="hidden" id="hidden-username" name="username">
+                </div>
+
+                <div class="layui-form-item" id="div-submit" style="text-align: right">
+                    <button id="submit" type="button" lay-submit lay-filter="formSubmit">提交</button>
+                </div>
+            </form>
+        </div>
+        <div id="div-history" class="layui-tab-item">
+
+        </div>
+    </div>
+</div>
+
+
+<script src="/layui/layui.js"></script>
+<script>
+    layui.use(['layedit', 'form'], function () {
+        let layedit = layui.layedit
+            , form = layui.form
+            , $ = layui.jquery;
+
+        const textarea = layedit.build('input-content'); //建立编辑器
+
+        //同步富文本编辑器内容到表单textarea
+        form.verify({
+            content: function (value) {
+                return layedit.sync(textarea);
+            }
+        })
+
+        //隐藏域
+        $('#hidden-username').val(window.parent.parentToChildValue('hidden-username'));
+
+        //表单提交
+        form.on('submit(formSubmit)', function (data) {
+            $.post('/discussion/create', {
+                json: JSON.stringify(data.field)
+            }, function (data) {
+                layer.msg('创建成功', {
+                    time: 1000
+                }, function () {
+                    window.location.reload(true);
+                })
+            })
+        })
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>讨论页</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/layui/icon-extend/iconfont.css">
+    <script src="/js/jquery.js"></script>
+    <script src="/js/title.js"></script>
+    <script src="/js/discussion.js"></script>
+    <style>
+        p {
+            text-align: center
+        }
+
+        .body-item {
+            padding: 10px;
+        }
+
+        #look {
+            height: 30px;
+            width: 75px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 50px;
+            background-color: ghostwhite;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        #submit {
+            height: 30px;
+            width: 75px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 50px;
+            background-color: #b2dba1;
+            color: white;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-col-md12 layui-col-space20">
+    <!--内容-->
+    <div id="div-content" class="layui-col-md9">
+    </div>
+
+    <!--侧边-->
+    <div class="div-personal layui-col-md3" style="background-color: white">
+        <div class="personal-header" style="padding: 15px;font-weight: bold">
+            <div>
+                <i class="icon-extend icon-extend-operation"> 成长中心</i>
+            </div>
+        </div>
+        <div class="personal-body layui-col-md12" style="margin-top: 10px">
+            <div class="layui-col-md6 body-item" style="color: orange">
+                <p>
+                    <i class="icon-extend icon-extend-data-view" style="font-size: 30px;"></i>
+                </p>
+                <p>
+                    成长值
+                </p>
+                <br/>
+                <p>
+                    180
+                </p>
+            </div>
+            <div class="layui-col-md6 body-item" style="color: cornflowerblue">
+                <p>
+                    <i class="icon-extend icon-extend-smile" style="font-size: 30px;"></i>
+                </p>
+                <p>
+                    粉丝数
+                </p>
+                <br/>
+                <p>
+                    180
+                </p>
+            </div>
+            <div class="layui-col-md6 body-item" style="color:lightseagreen;">
+                <p>
+                    <i class="icon-extend icon-extend-edit" style="font-size: 30px"></i>
+                </p>
+                <p>
+                    发帖数
+                </p>
+                <br/>
+                <p>
+                    180
+                </p>
+            </div>
+            <div class="layui-col-md6 body-item" style="color:lightcoral;">
+                <p>
+                    <i class="icon-extend icon-extend-import" style="font-size: 30px;"></i>
+                </p>
+                <p>
+                    回帖数
+                </p>
+                <br/>
+                <p>
+                    180
+                </p>
+            </div>
+            <div class="layui-col-md12"
+                 style="border-top:1px darkslategrey solid;padding:10px;text-align: center;font-family: 'STHupo',serif;font-size: 20px;color: darkslategrey">
+                青春决赛季<br><br>
+                聊聊你知道的问题！
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="layui-row">
+    <div id="demo2-2" style="height: 50px;"></div>
+</div>
+
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    $(function () {
+        layui.use(['laypage'], function () {
+            let laypage = layui.laypage;
+            laypage.render({
+                elem: 'demo2-2'
+                , count: 100
+                , theme: '#FFB800'
+            });
+        })
+    })
+</script>
+</body>
+</html>

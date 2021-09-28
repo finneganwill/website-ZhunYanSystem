@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF‐8">
+    <title>修改密码</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/layui/icon-extend/iconfont.css">
+
+    <script src="/js/jquery.js"></script>
+
+</head>
+<body>
+<div class="layui-card">
+    <div class="layui-card-header"><h3>修改密码</h3></div>
+    <div class="layui-card-body" style="padding-left: 80px">
+        <form class="layui-form">
+            <input type="hidden" id="hidden" name="username">
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="input-old">旧密码</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" type="password" id="input-old" name="oldPassword">
+                </div>
+
+                <div id="tip-old" class="layui-form-mid layui-word-aux">请填写6到12位密码,可包含数字和大小写字母</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="input-new">新密码</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" type="password" id="input-new" name="newPassword">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="input-confirm">确认新密码</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" type="password" id="input-confirm" name="confirm">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button id="btn-submit" type="button" class="layui-btn" style="background-color: #46b8da">修改
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    $(function () {
+        $('#hidden').val(window.parent.parentToChildValue('hidden-username'));
+        $('#btn-submit').click(function () {
+            if (!($('#input-old').val() !== '' && $('#input-new').val() !== '' && $('#input-confirm').val() !== '')) {
+                layer.msg('请完整填写表单')
+            } else if ($('#input-confirm').val() !== $('#input-new').val()) {
+                layer.msg('两次密码输入不一致')
+            } else {
+                $.post('/user/update/password', {
+                    username: $('#hidden').val(),
+                    oldPassword: $('#input-old').val(),
+                    newPassword: $('#input-new').val()
+                }, function (response) {
+                    layer.msg(response.msg,{
+                        time: 2000
+                    },function () {
+                        window.location.href = "/user/info/psw"
+                    })
+                }, 'json')
+            }
+        })
+    })
+</script>
+</html>

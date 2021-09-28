@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.zymainsystem.mapper.OfficialMapper">
+    <resultMap id="OfficialMap" type="Official">
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="license" column="license"/>
+        <result property="address" column="address"/>
+        <result property="tel" column="tel"/>
+        <result property="email" column="email"/>
+        <result property="info" column="info"/>
+    </resultMap>
+
+    <insert id="insert">
+        insert into official (code, name, password, license, address, tel, email, info)
+        values (#{code}, #{name}, #{password}, #{license}, #{address}, #{tel}, #{email}, #{info});
+    </insert>
+
+    <select id="queryOneByCode" resultMap="OfficialMap" resultType="com.example.zymainsystem.pojo.Official">
+        select id,
+               code,
+               name,
+               password,
+               license,
+               address,
+               tel,
+               email,
+               info
+        from official
+        where code = #{code}
+    </select>
+
+
+</mapper>

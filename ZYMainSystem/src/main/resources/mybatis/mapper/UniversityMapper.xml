@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.zymainsystem.mapper.UniversityMapper">
+    <resultMap id="UniversityMap" type="University">
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <!--    insert-->
+    <!--    delete-->
+    <!--    update-->
+    <!--    select-->
+    <select id="queryAll" resultMap="UniversityMap" resultType="arraylist">
+        select code, name
+        from university
+    </select>
+
+    <select id="queryOneByName" resultMap="UniversityMap">
+        select code, name, license
+        from university
+        where name = #{name}
+    </select>
+    <select id="queryOneByCode" resultMap="UniversityMap">
+        select code, name, license
+        from university
+        where code = #{code}
+    </select>
+</mapper>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF‐8">
+    <title>基本资料</title>
+
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/layui/icon-extend/iconfont.css">
+    <link rel="stylesheet" href="/css/info-info.css">
+    <script src="/js/jquery.js"></script>
+
+</head>
+<body>
+<div class="layui-card">
+    <div class="layui-card-header"><h3>基本资料</h3></div>
+    <div class="layui-card-body" style="padding-left: 80px">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">头像</label>
+                <div class="layui-input-block">
+                    <img id="img" alt="头像" src="/img/profile.png">
+                </div>
+                <div class="layui-input-block" style="margin-top: 15px">
+                    <button type="button" class="layui-btn layui-btn-primary" id="btn-upload"
+                            style="border: 1px solid lightgray;">
+                        <i class="layui-icon">&#xe67c;</i>更换头像
+                    </button>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="input-username">账号</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" type="text" id="input-username" name="username"
+                           th:value="${username}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="input-alias">昵称</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" type="text" id="input-alias" name="alias" th:value="${alias}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="sex" value="0" title="保密" th:checked="${sex}==0?true:false">
+                    <input type="radio" name="sex" value="1" title="男" th:checked="${sex}==1?true:false">
+                    <input type="radio" name="sex" value="2" title="女" th:checked="${sex}==2?true:false">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="input-birth">出生日期</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" type="text" id="input-birth" name="birthday" th:value="${birthday}"
+                           placeholder="yyyy年MM月dd日">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="input-phone">手机号</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" type="text" id="input-phone" name="phone" th:value="${phone}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="input-email">邮箱</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" type="text" id="input-email" name="email" th:value="${email}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="input-almamater">毕业院校</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" type="text" id="input-almamater" name="almamater"
+                           th:value="${almamater}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="input-goalmater">目标院校</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" type="text" id="input-goalmater" name="goalmater"
+                           th:value="${goalmater}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" for="textarea-info">简介</label>
+                <div class="layui-input-block">
+                    <textarea class="layui-input" type="text" id="textarea-info" name="info"
+                              th:value="${info}" placeholder="这个人很懒，什么也没留下..."></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    $(function () {
+        let img = '[[${img}]]'
+        if (img !== '') {
+            $('#img').attr('src', img);
+        }
+
+        layui.use(['form', 'laydate', 'upload'], function () {
+            const form = layui.form,
+                laydate = layui.laydate,
+                upload = layui.upload;
+
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                $.post("/user/update/info", {
+                    json: JSON.stringify(data.field)
+                }, function (data) {
+                    layer.msg(data.msg, {
+                        time: 2000
+                    })
+                }, 'json')
+                return false;
+            });
+
+            //文件上传
+            upload.render({
+                elem: '#btn-upload', //绑定元素
+                url: '/user/update/img', //上传接口
+                number: 1,
+                size: 102400,
+                data: {
+                    username: $("#input-username").val()
+                },
+                done: function (response) {
+                    if (response.code === 200) {
+                        layer.msg('上传成功', {
+                            time: 3000
+                        }, function () {
+                            $("#img").attr('src', 'http://localhost:8080/upload/imgs/' + response.url)
+                        })
+                    } else {
+                        layer.msg('上传失败', {
+                            time: 3000
+                        })
+                    }
+                }
+            });
+
+            laydate.render({
+                elem: '#input-birth',
+                format: 'yyyy年MM月dd日'//指定元素
+            });
+        });
+
+    })
+
+
+</script>
+</body>
+</html>

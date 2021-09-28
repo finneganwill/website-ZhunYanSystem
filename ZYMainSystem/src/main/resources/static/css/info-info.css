@@ -1,0 +1,28 @@
+label {
+    text-align-last: justify;
+    text-align: justify;
+    text-justify: distribute-all-lines;
+    white-space: nowrap !important;
+}
+
+.layui-input-block {
+    width: 400px;
+}
+
+#input-username {
+    border: none;
+    color: darkgray;
+    font-size: 15px;
+}
+
+#textarea-info {
+    height: 150px;
+    padding: 10px;
+}
+
+img {
+    border-radius: 50px;
+    width: 65px;
+    height: 65px;
+    margin-left: 5px;
+}

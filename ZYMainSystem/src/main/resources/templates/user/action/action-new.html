@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF‐8">
+    <title>新建</title>
+
+    <link rel="stylesheet" href="/layui/css/layui.css">
+
+    <style>
+        #submit {
+            height: 35px;
+            width: 110px;
+            margin-top: 5px;
+            border: none;
+            background-color: darkslategray;
+            border-radius: 50px;
+            color: white;
+        }
+    </style>
+</head>
+<body style="background-color: white;padding: 30px 30px 10px;">
+<!--选项-->
+<form class="layui-form" id="formTest">
+    <div class="layui-form-item">
+        <!--标题-->
+        <label for="input-title"></label>
+        <input id="input-title" name="title" type="text" placeholder="请输入标题，最多30个字"
+               style="margin: 15px;border: none;font-size: 20px;width: 100%">
+        <!--分割线-->
+        <div style="height: 2px;background-color: whitesmoke;margin-bottom: 5px"></div>
+    </div>
+
+
+    <div class="layui-form-item" style="margin-left: -50px">
+        <label class="layui-form-label">类型</label>
+        <input type="radio" name="tag" value="不显示" title="不显示" checked>
+        <input type="radio" name="tag" value="学硕" title="学硕">
+        <input type="radio" name="tag" value="专硕" title="专硕">
+        <input type="radio" name="tag" value="学博" title="学博">
+        <input type="radio" name="tag" value="专博" title="专博">
+    </div>
+
+    <div class="layui-form-item" style="margin-left: -50px">
+        <label class="layui-form-label">方向</label>
+        <div class="layui-inline" style="width: 180px">
+            <label for="select-subject">
+                <select id="select-subject" name="subject">
+                    <option value="不显示">学科（默认不显示）</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="layui-inline" style="width: 180px">
+            <label for="select-category">
+                <select id="select-category" name="category" disabled>
+                    <option value="不显示">门类（默认不显示）</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="layui-inline" style="width: 180px">
+            <label for="select-category">
+                <select id="select-major" name="major" disabled>
+                    <option value="不显示">专业（默认不显示）</option>
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <!--正文-->
+        <label for="input-content"></label>
+        <textarea id="input-content" name="content" lay-verify="content" style="display: none" placeholder="正文"></textarea>
+    </div>
+
+    <div class="layui-form-item">
+       <input type="hidden" id="hidden-username" name="username">
+    </div>
+
+    <div class="layui-form-item" style="text-align: right">
+        <!--按钮-->
+        <button id="submit" type="button" lay-submit lay-filter="formCommit">提交</button>
+    </div>
+</form>
+
+
+<script src="/layui/layui.js"></script>
+<script>
+    layui.use(['jquery', 'layedit', 'form'], function () {
+        const layedit = layui.layedit,
+            form = layui.form,
+            $ = layui.jquery;
+
+        //建立编辑器
+        const textarea = layedit.build('input-content', {
+            height: 450
+        });
+
+        //同步富文本编辑器内容到表单textarea
+        form.verify({
+            content: function (value) {
+                return layedit.sync(textarea);
+            }
+        })
+
+        //隐藏域
+        $('#hidden-username').val(window.parent.parentToChildValue('hidden-username'));
+
+        //提交
+        form.on('submit(formCommit)', function (data) {
+            $.post('/issue/create',{
+                json: JSON.stringify(data.field)
+            },function (data) {
+                if(data){
+                    layer.msg('创建成功',{
+                        time: 1000
+                    },function () {
+                        window.location.reload(true);
+                    })
+                }
+            })
+        })
+    });
+</script>
+
+</body>
+</html>

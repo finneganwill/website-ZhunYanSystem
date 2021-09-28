@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF‐8">
+    <title>账号注销</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <script src="/js/jquery.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="layui-card" style="height: 700px">
+    <div class="layui-card-header"><h3>账号注销</h3></div>
+    <div class="layui-card-body">
+        <div class="alert alert-danger" role="alert" style="font-weight: bold">此操作无法恢复！请慎重操作！</div>
+        <div class="alert alert-warning" role="alert">
+            注意！该操作是销毁当前账号，并非退出登录，该操作会清空所有数据并将账号信息从数据库中删除，并且该操作不可撤销，请谨慎操作！
+        </div>
+        <div class="layui-form-item">
+            <button id="btn-destroy" type="button" class="btn btn-danger" style="width: 80px">
+                注销
+            </button>
+        </div>
+    </div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    $(function () {
+        $('#btn-destroy').click(function () {
+            layer.confirm('确认删除吗？',function (index) {
+                layer.close(index)
+                parent.parent.location.href = '/logout';
+            })
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.zymainsystem.mapper.UserMapper">
+    <resultMap id="userMap" type="User">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="permission" column="permission"/>
+        <result property="online" column="online"/>
+        <result property="alias" column="alias"/>
+        <result property="img" column="img"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="almamater" column="almamater"/>
+        <result property="goalmater" column="goalmater"/>
+        <result property="info" column="info"/>
+    </resultMap>
+
+    <!--    insert-->
+    <insert id="insert">
+        insert into user(id, username, password, permission, online, alias, img, sex, birthday, phone, email, almamater,
+                         goalmater, info)
+        values (#{id}, #{username}, #{password}, #{permission}, #{online}, #{alias}, #{img}, #{sex}, #{birthday},
+                #{phone}, #{email}, #{almamater}, #{goalmater}, #{info})
+    </insert>
+
+    <!--    delete-->
+    <delete id="delete">
+        delete
+        from user
+        where username = #{username}
+    </delete>
+
+    <!--    update-->
+    <update id="updateInfo">
+        update user
+        set alias=#{alias},
+            sex=#{sex},
+            birthday=#{birthday},
+            phone =#{phone},
+            email =#{email},
+            almamater =#{almamater},
+            goalmater =#{goalmater},
+            info =#{info}
+        where username = #{username}
+    </update>
+
+    <update id="updateImg">
+        update user
+        set img=#{img}
+        where username = #{username}
+    </update>
+
+    <update id="updatePsw">
+        update user
+        set password=#{password}
+        where username = #{username}
+    </update>
+
+    <!--    select-->
+    <select id="queryAll" resultMap="userMap">
+        select id,
+               username,
+               password,
+               permission,
+               online,
+               alias,
+               img,
+               sex,
+               birthday,
+               phone,
+               email,
+               almamater,
+               goalmater,
+               info
+        from user
+    </select>
+
+    <select id="queryOneByUsername" resultMap="userMap">
+        select id,
+               username,
+               password,
+               permission,
+               online,
+               alias,
+               img,
+               sex,
+               birthday,
+               phone,
+               email,
+               almamater,
+               goalmater,
+               info
+        from user
+        where username = #{username}
+    </select>
+</mapper>
